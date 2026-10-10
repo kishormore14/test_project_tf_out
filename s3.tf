@@ -11,12 +11,28 @@ resource "random_string" "suffix" {
 
 locals {
   bucket_name = "${var.project_name}-${random_string.suffix.result}"
+
+  common_tags = {
+    Project     = var.project_name
+    Environment = var.environment
+    ManagedBy   = "Terraform"
+    Owner       = "Kishor"
+  }
 }
 
 # 1. AWS S3 Bucket
 resource "aws_s3_bucket" "app_storage" {
   bucket        = local.bucket_name
-  force_destroy = true
+  force_destroy = false
+
+  tags = merge(local.common_tags, {
+    Name    = local.bucket_name
+    Service = "S3"
+  })
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 # 2. S3 Bucket Versioning

@@ -5,6 +5,11 @@
 # 1. AWS SNS Topic
 resource "aws_sns_topic" "notifications" {
   name = "${var.project_name}-topic-${random_string.suffix.result}"
+
+  tags = merge(local.common_tags, {
+    Name    = "${var.project_name}-topic-${random_string.suffix.result}"
+    Service = "SNS"
+  })
 }
 
 # 2. AWS SQS Queue
@@ -14,6 +19,11 @@ resource "aws_sqs_queue" "app_queue" {
   max_message_size          = 262144
   message_retention_seconds = 86400
   receive_wait_time_seconds = 10
+
+  tags = merge(local.common_tags, {
+    Name    = "${var.project_name}-queue-${random_string.suffix.result}"
+    Service = "SQS"
+  })
 }
 
 # 3. Subscribe SQS to SNS

@@ -24,7 +24,8 @@ resource "aws_dynamodb_table" "app_table" {
     enabled        = true
   }
 
-  tags = {
-    Environment = var.environment
-  }
+  tags = merge(local.common_tags, {
+    Name    = "${var.project_name}-table-${random_string.suffix.result}"
+    Service = "DynamoDB"
+  })
 }

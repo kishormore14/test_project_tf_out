@@ -14,6 +14,11 @@ resource "aws_iam_role" "lambda_exec" {
       Principal = { Service = "lambda.amazonaws.com" }
     }]
   })
+
+  tags = merge(local.common_tags, {
+    Name    = "${var.project_name}-exec-role-${random_string.suffix.result}"
+    Service = "IAM"
+  })
 }
 
 # 2. Attach CloudWatch Logs Policy
@@ -43,6 +48,11 @@ resource "aws_lambda_function" "api_processor" {
   memory_size      = 128
   timeout          = 10
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
+
+  tags = merge(local.common_tags, {
+    Name    = "${var.project_name}-fn-${random_string.suffix.result}"
+    Service = "Lambda"
+  })
 }
 
 # 5. Create Public Function URL

@@ -9,6 +9,11 @@ resource "aws_ssm_parameter" "config_endpoint" {
   type        = "String"
   value       = "https://api.${var.project_name}.internal/v1"
   tier        = "Standard"
+
+  tags = merge(local.common_tags, {
+    Name    = "/${var.project_name}/config/api_endpoint"
+    Service = "SSM"
+  })
 }
 
 # 2. AWS SSM DB User Parameter
@@ -18,4 +23,9 @@ resource "aws_ssm_parameter" "db_username" {
   type        = "String"
   value       = "admin_${random_string.suffix.result}"
   tier        = "Standard"
+
+  tags = merge(local.common_tags, {
+    Name    = "/${var.project_name}/config/db_user"
+    Service = "SSM"
+  })
 }

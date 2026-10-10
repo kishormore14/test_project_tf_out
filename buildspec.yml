@@ -8,8 +8,8 @@ env:
 phases:
   install:
     commands:
-      - echo "Installing HashiCorp Terraform CLI..."
-      - curl -sSL https://releases.hashicorp.com/terraform/1.7.5/terraform_1.7.5_linux_amd64.zip -o terraform.zip
+      - echo "Installing HashiCorp Terraform CLI v1.10.5..."
+      - curl -sSL https://releases.hashicorp.com/terraform/1.10.5/terraform_1.10.5_linux_amd64.zip -o terraform.zip
       - unzip -q terraform.zip
       - mv terraform /usr/local/bin/
       - terraform --version
