@@ -128,9 +128,9 @@ locals {
 # Banner 1: S3 Bucket
 module "s3_banner" {
   source  = "kishormore14/tfout/utility"
-  version = "0.1.4"
+  version = "0.1.5"
 
-  tfout_version = "v0.1.3"
+  tfout_version = "v0.1.4"
 
   title   = local.banners.s3.title
   status  = local.banners.s3.status
@@ -146,10 +146,10 @@ module "s3_banner" {
 # Banner 2: SQS & SNS Messaging (Executes after S3)
 module "sqs_sns_banner" {
   source     = "kishormore14/tfout/utility"
-  version    = "0.1.4"
+  version    = "0.1.5"
   depends_on = [module.s3_banner]
 
-  tfout_version = "v0.1.3"
+  tfout_version = "v0.1.4"
 
   title   = local.banners.sqs_sns.title
   status  = local.banners.sqs_sns.status
@@ -165,10 +165,10 @@ module "sqs_sns_banner" {
 # Banner 3: SSM Parameter Store (Executes after SQS & SNS)
 module "ssm_banner" {
   source     = "kishormore14/tfout/utility"
-  version    = "0.1.4"
+  version    = "0.1.5"
   depends_on = [module.sqs_sns_banner]
 
-  tfout_version = "v0.1.3"
+  tfout_version = "v0.1.4"
 
   title   = local.banners.ssm.title
   status  = local.banners.ssm.status
@@ -184,10 +184,10 @@ module "ssm_banner" {
 # Banner 4: Lambda Function (Executes after SSM)
 module "lambda_banner" {
   source     = "kishormore14/tfout/utility"
-  version    = "0.1.4"
+  version    = "0.1.5"
   depends_on = [module.ssm_banner]
 
-  tfout_version = "v0.1.3"
+  tfout_version = "v0.1.4"
 
   title   = local.banners.lambda.title
   status  = local.banners.lambda.status
@@ -203,10 +203,10 @@ module "lambda_banner" {
 # Banner 5: DynamoDB Table (Executes after Lambda)
 module "dynamodb_banner" {
   source     = "kishormore14/tfout/utility"
-  version    = "0.1.4"
+  version    = "0.1.5"
   depends_on = [module.lambda_banner]
 
-  tfout_version = "v0.1.3"
+  tfout_version = "v0.1.4"
 
   title   = local.banners.dynamodb.title
   status  = local.banners.dynamodb.status
