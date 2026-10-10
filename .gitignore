@@ -1,0 +1,32 @@
+# =============================================================================
+# TERRAFORM GITIGNORE FOR TEST_S3_PROJECT
+# =============================================================================
+
+# Local .terraform directory (downloaded providers and modules)
+.terraform/
+
+# Terraform state files (may contain sensitive values, keys, and credentials)
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# Local tfout binary cache directory
+.tfout/
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Exclude sensitive tfvars files (keep example.tfvars if needed)
+*.tfvars.json
+# terraform.tfvars # Uncomment if terraform.tfvars contains private credentials
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+
+# Local overrides
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
