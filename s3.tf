@@ -23,16 +23,12 @@ locals {
 # 1. AWS S3 Bucket
 resource "aws_s3_bucket" "app_storage" {
   bucket        = local.bucket_name
-  force_destroy = false
+  force_destroy = true
 
   tags = merge(local.common_tags, {
     Name    = local.bucket_name
     Service = "S3"
   })
-
-  lifecycle {
-    prevent_destroy = true
-  }
 }
 
 # 2. S3 Bucket Versioning
