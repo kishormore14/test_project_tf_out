@@ -130,7 +130,7 @@ module "s3_banner" {
   source  = "kishormore14/tfout/utility"
   version = "0.1.7"
 
-  tfout_version = "v0.1.5"
+  tfout_version = "v0.1.6"
 
   title   = local.banners.s3.title
   status  = local.banners.s3.status
@@ -149,7 +149,7 @@ module "sqs_sns_banner" {
   version    = "0.1.7"
   depends_on = [module.s3_banner]
 
-  tfout_version = "v0.1.5"
+  tfout_version = "v0.1.6"
 
   title   = local.banners.sqs_sns.title
   status  = local.banners.sqs_sns.status
@@ -168,7 +168,7 @@ module "ssm_banner" {
   version    = "0.1.7"
   depends_on = [module.sqs_sns_banner]
 
-  tfout_version = "v0.1.5"
+  tfout_version = "v0.1.6"
 
   title   = local.banners.ssm.title
   status  = local.banners.ssm.status
@@ -187,7 +187,7 @@ module "lambda_banner" {
   version    = "0.1.7"
   depends_on = [module.ssm_banner]
 
-  tfout_version = "v0.1.5"
+  tfout_version = "v0.1.6"
 
   title   = local.banners.lambda.title
   status  = local.banners.lambda.status
@@ -206,7 +206,7 @@ module "dynamodb_banner" {
   version    = "0.1.7"
   depends_on = [module.lambda_banner]
 
-  tfout_version = "v0.1.5"
+  tfout_version = "v0.1.6"
 
   title   = local.banners.dynamodb.title
   status  = local.banners.dynamodb.status
