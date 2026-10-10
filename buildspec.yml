@@ -1,3 +1,4 @@
+
 version: 0.2
 
 env:
@@ -8,28 +9,45 @@ env:
 phases:
   install:
     commands:
+<<<<<<< HEAD
       - echo "Installing HashiCorp Terraform CLI v1.10.5..."
       - curl -sSL https://releases.hashicorp.com/terraform/1.10.5/terraform_1.10.5_linux_amd64.zip -o terraform.zip
       - unzip -q terraform.zip
       - mv terraform /usr/local/bin/
       - terraform --version
+=======
+      - echo "Installing HashiCorp Terraform CLI..."
+      - |
+        set -e
+        curl -fsSL https://releases.hashicorp.com/terraform/1.7.5/terraform_1.7.5_linux_amd64.zip -o /tmp/terraform.zip
+        unzip -oq /tmp/terraform.zip -d /tmp
+        install /tmp/terraform /usr/local/bin/terraform
+        terraform --version
+>>>>>>> 9fff7696e6432593f42f50e853401a56ff4c4d83
 
   pre_build:
     commands:
-      - echo "Initializing Terraform workspace and fetching registry module kishormore14/tfout/utility..."
-      - terraform init
+      - echo "Initializing Terraform and downloading registry modules..."
+      - terraform init -input=false
 
   build:
     commands:
-      - echo "========================================================================="
-      - echo "STAGE 1: APPLYING TERRAFORM INFRASTRUCTURE & DISPLAYING TFOUT BANNERS"
-      - echo "========================================================================="
-      - terraform apply -auto-approve -var="aws_profile="
+      - |
+        echo "========================================================================="
+        echo "STAGE 1: APPLYING TERRAFORM INFRASTRUCTURE"
+        echo "========================================================================="
+      - terraform apply -auto-approve -input=false
 
   post_build:
     commands:
-      - echo "========================================================================="
-      - echo "STAGE 2: CLEANING UP INFRASTRUCTURE (TERRAFORM DESTROY)"
-      - echo "========================================================================="
-      - terraform destroy -auto-approve -var="aws_profile="
-      - echo "Build test cycle completed: both Apply and Destroy executed successfully!"
+      - |
+        if [ "$CODEBUILD_BUILD_SUCCEEDING" = "1" ]; then
+          echo "========================================================================="
+          echo "STAGE 2: DESTROYING TEST INFRASTRUCTURE"
+          echo "========================================================================="
+          terraform destroy -auto-approve -input=false
+          echo "Build test cycle completed."
+        else
+          echo "Build failed. Skipping automatic destroy; inspect the resources and Terraform state."
+          exit 1
+        fi
