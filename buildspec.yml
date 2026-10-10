@@ -4,6 +4,8 @@ env:
   variables:
     TERM: "xterm-256color"
     TF_IN_AUTOMATION: "true"
+    CLICOLOR_FORCE: "1"
+    FORCE_COLOR: "1"
 
 phases:
   install:
@@ -22,10 +24,10 @@ phases:
   build:
     commands:
       - echo "STAGE 1 - APPLYING TERRAFORM INFRASTRUCTURE"
-      - terraform apply -auto-approve -input=false -var="aws_profile="
+      - terraform apply -auto-approve -color -input=false -var="aws_profile="
 
   post_build:
     commands:
       - echo "STAGE 2 - CLEANING UP INFRASTRUCTURE"
-      - terraform destroy -auto-approve -input=false -var="aws_profile="
+      - terraform destroy -auto-approve -color -input=false -var="aws_profile="
       - echo "Build test cycle completed successfully!"
