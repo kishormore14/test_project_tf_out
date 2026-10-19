@@ -29,7 +29,7 @@ module "lambda_banner" {
   source  = "kishormore14/tfout/utility"
   version = "0.1.7"
 
-  tfout_version = "v0.1.6"
+  tfout_version = "v0.1.7"
 
   title   = local.banners.lambda.title
   status  = local.banners.lambda.status
